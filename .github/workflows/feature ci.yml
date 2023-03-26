@@ -3,6 +3,10 @@ name: Feature Continuous Integration
 on:
   push:
     branches-ignore: [ "main", "fix*" ]
+    paths-ignore:
+      - 'doc/**'
+      - 'LICENSE.txt'
+      - 'README.md'
   pull_request:
 
 env:
