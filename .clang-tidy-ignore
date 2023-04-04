@@ -1,0 +1,5 @@
+# Reference:
+# https://github.com/vmware/concord-bft/blob/master/.clang-tidy-ignore
+
+# ignore third party source files
+*/_deps/*
