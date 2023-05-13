@@ -26,12 +26,14 @@ namespace easy
     // clang-format on
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr void set(B& b, B bit, Bs... bits) noexcept
     {
         b |= (bit | ... | bits);
     }
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr void reset(B& b, Bs... bits) noexcept
     {
         if constexpr (sizeof...(Bs) > 0)
@@ -45,19 +47,27 @@ namespace easy
     }
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr bool test(B b, B bit, Bs... bits) noexcept
     {
-        const auto test_bits = (bit | ... | bits);
-        return ((b & test_bits) == test_bits);
+        if (const auto test_bits = (bit | ... | bits);
+            test_bits != static_cast<B>(0))
+        {
+            return ((b & test_bits) == test_bits);
+        }
+
+        return false;
     }
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr void flip(B& b, B bit, Bs... bits) noexcept
     {
         b ^= (bit | ... | bits);
     }
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr bool test_all_of(B b, B bit, Bs... bits) noexcept
     {
         const auto test_bits = (bit | ... | bits);
@@ -65,12 +75,14 @@ namespace easy
     }
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr bool test_any_of(B b, B bit, Bs... bits) noexcept
     {
         return ((b & (bit | ... | bits)) != static_cast<B>(0));
     }
 
     template <enum_bitmask B, enum_bitmask... Bs>
+    requires (std::conjunction_v<std::is_same<B, Bs>...>)
     constexpr bool test_none_of(B b, B bit, Bs... bits) noexcept
     {
         return ((b & (bit | ... | bits)) == static_cast<B>(0));
