@@ -10,7 +10,6 @@ namespace easy
     // clang-format off
     template <typename T>
     concept enum_bitmask = std::is_enum_v<T> &&
-        std::is_unsigned_v<std::underlying_type_t<T>> &&
     requires(T t)
     {
         //T::none;
